@@ -8,7 +8,7 @@
           </div>
           <div class="input-ctn">
             <div class="label">Password</div>
-            <input type="password" class="set-input" v-model="password" placeholder="Mot de passe">
+            <input type="password" class="set-input" v-model="password" placeholder="Password">
           </div>
           <button type="submit" class="auth-btn">Sign In</button>
           <p>OR</p>

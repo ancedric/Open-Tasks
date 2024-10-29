@@ -1,3 +1,4 @@
+import LandingPage from './views/LandingPage.vue'
 import Home from './views/Home.vue'
 import AddTask from './views/AddTask.vue'
 import Tasks from './views/Tasks.vue'
@@ -10,6 +11,7 @@ import SetProfile from './views/SetProfile.vue'
 import Pricing from './views/Pricing.vue'
 
 export const routes = [
+    {path: '/', component: LandingPage},
     {path: '/home', component: Home},
     {path: '/addTask/:title', component: AddTask},
     {path: '/tasks', component: Tasks},
