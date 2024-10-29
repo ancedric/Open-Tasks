@@ -14,13 +14,13 @@
     const profileStore = useProfileStore()
 
     console.log('userStore:',userStore.user, 'user email:', userStore.user.email)
-    if(userStore.user.email === null || userStore.user.email === undefined){
+    /*if(userStore.user.email === null || userStore.user.email === undefined){
         router.push('/auth')
-    }
+    }*/
     console.log('profile:', profileStore.profile, 'profile email:', profileStore.profile.email)
-    if(profileStore.profile.email === null || profileStore.profile.email === undefined){
+    /*if(profileStore.profile.email === null || profileStore.profile.email === undefined){
         router.push('/setProfile')
-    }
+    }*/
 </script>
 
 <template>
