@@ -6,7 +6,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import ConfirmEmail from './views/ConfirmEmail.vue'
 import EditProfile from './views/EditProfile.vue'
-import SetProfile from './views/setProfile.vue'
+import SetProfile from './views/SetProfile.vue'
 import Pricing from './views/Pricing.vue'
 
 export const routes = [
