@@ -58,7 +58,7 @@
 <script setup>
     import supabase from '../services/supabaseConfig.js';
     import {ref, computed} from 'vue'
-    import ProgressBar from '../components/Progressbar.vue'
+    import ProgressBar from '../components/ProgressBar.vue'
     import {useRouter} from "vue-router" 
     import { useProfileStore } from '../store/profile'
 
