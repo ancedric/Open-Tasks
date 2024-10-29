@@ -65,7 +65,7 @@
           console.log('profile data:', data[0])
           profile.setProfile(data[0]) 
           console.log( 'user profile : ', profile)
-          router.push('/')
+          router.push('/home')
         }
           
       }

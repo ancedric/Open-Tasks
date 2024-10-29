@@ -10,7 +10,7 @@ import SetProfile from './views/SetProfile.vue'
 import Pricing from './views/Pricing.vue'
 
 export const routes = [
-    {path: '/', component: Home},
+    {path: '/home', component: Home},
     {path: '/addTask/:title', component: AddTask},
     {path: '/tasks', component: Tasks},
     {path: '/profile', component: Profile},

@@ -69,7 +69,7 @@
     }
 
 const backHome = () =>{
-    router.push({path: "/"})
+    router.push({path: "/home"})
 }
 </script>
 

@@ -137,12 +137,12 @@
                 profile.setProfile(data[0])
 
                 console.log('profile:', profile)
-                router.push('/')
+                router.push('/home')
             }
     }
 
 const backHome = () =>{
-    router.push({path: "/"})
+    router.push({path: "/home"})
 }
 </script>
 
