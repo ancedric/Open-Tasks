@@ -1,6 +1,7 @@
 import LandingPage from './views/LandingPage.vue'
 import Home from './views/Home.vue'
 import AddTask from './views/AddTask.vue'
+import EditTask from './views/EditTask.vue'
 import Tasks from './views/Tasks.vue'
 import Profile from './views/Profile.vue'
 import Login from './views/Login.vue'
@@ -14,6 +15,7 @@ export const routes = [
     {path: '/', component: LandingPage},
     {path: '/home', component: Home},
     {path: '/addTask/:title', component: AddTask},
+    {path: '/editTask/:title/desc/:description', component: EditTask},
     {path: '/tasks', component: Tasks},
     {path: '/profile', component: Profile},
     {path: '/auth', component: Login},

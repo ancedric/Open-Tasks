@@ -11,6 +11,8 @@
                         v-for="todo in sortedTasks"
                         :class="{task: true, current: open && todo.id === selectedTodoId}" 
                         :key="todo.id"
+                        @mouseover="displayOptions(todo.id)"
+                        @mouseleave="hideOptions(todo.id)"
                         @click="displayTodo(todo.id, todo.title, todo.description, todo.steps, todo.progression, todo.date, todocompleted)"
                     >
                         <div class="data">
@@ -21,8 +23,24 @@
                             <ProgressBar :percent="todo.progression"/>
                         </div>
                         <div class="progress">{{todo.progression}} %</div>
-                        
+                        <div :class="{options:true, visible: showOptions && todo.id === selectedTodoId}" 
+                            v-if="showOptions"
+                            @click="openOptions = true"
+                        >
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="todoOptions" v-if="openOptions && todo.id === selectedTodoId">
+                            <div class="option" @click="editTask(todo.title, todo.description)">
+                                <img src="/src/assets/images/edit.png">
+                            </div>
+                            <div class="option" @click="deleteTask(todo.id)">
+                                <img src="/src/assets/images/corbeille.png">
+                            </div>
+                        </div>
                     </li>
+                    
             </ul>
             <label>
                 <input type="checkbox" v-model="hideCompleted">
@@ -69,6 +87,8 @@
     const selectedTodoId= ref(null)
     const router = useRouter()
     const profileStore = useProfileStore()
+    const showOptions = ref(false)
+    const openOptions= ref(false)
 
 
     const getTasks = async () => {
@@ -93,13 +113,13 @@
         if(tasks.value.length === 0 || tasks.value === undefined ){
             return []
         }
-        return tasks.value.sort((a, b) => a.date > b.date? 1 : -1)
+        return tasks.value.sort((a, b) => a.id > b.id ? 1 : -1)
     })
-    const sortCompletedTasks = computed(() => {
+    const sortCompletedTasks = () => {
         return tasks.value.sort((a, b) => a.date > b.date? 1 : -1).filter(t => hideCompleted.value === false || t.completed === false)
-    })
+    }
 
-    const displayTodo =(id, title, description, steps, progression, date, completed) =>{
+    const displayTodo = (id, title, description, steps, progression, date, completed) =>{
     open.value = true
     selectedTodoId.value = id
     currentTodo.value = {
@@ -112,6 +132,33 @@
         completed,
     }
 }
+const displayOptions = (id) =>{
+    showOptions.value = true
+    selectedTodoId.value = id
+}
+const hideOptions = (id) =>{
+    selectedTodoId.value = id
+    showOptions.value = false
+    openOptions.value = false
+}
+
+const editTask = (title, description) => {
+    router.replace({path: `/editTask/${title}/desc/${description}`})
+}
+const deleteTask = async (id) => {
+    const { data, error } = await supabase
+        .from('Tasks')
+        .delete()
+        .eq('id', id)
+
+        if(error){
+            console.log("Erreur lors de la mise à jour de la tâche :",error)
+        }
+        if(data){
+            console.log("Updated data:", data)
+            router.push('/tasks')
+        }
+    }
 const backHome = () =>{
     router.push({path: "/home"})
 }
@@ -170,6 +217,7 @@ const backHome = () =>{
         padding-left: 10px;
         font-family: Inter;
         font-weight: 400;
+        font-size: 1rem;
         width: 80%;
         height: 60px;
         background-color: #97cbdc;
@@ -177,10 +225,45 @@ const backHome = () =>{
         margin-bottom: 10px;
         border-radius: 10px;
         transition: all 0.3s ease;
+        position: relative;
         @media screen and (max-width: 860px){
             width: 80%;
             justify-content: flex-start;
         }
+    }
+    .tasks-list ul .task .options{
+        opacity: 0;
+        width: 30px;
+        height: 30px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .tasks-list ul .task .visible{
+        opacity: 1;
+    }
+    .tasks-list ul .task .options .dot{
+        width: 5px;
+        height: 5px;
+        margin-bottom: 3px;
+        border-radius: 50px;
+        background-color: #0e0e0e;
+    }
+
+    .tasks-list ul .task .todoOptions{
+        position: absolute;
+        right: -30px;
+        width: 60px;
+        height: 50px;
+    }
+    .tasks-list ul .task .todoOptions .option{
+        width: 50%;
+        height: 50%;
+        color: grey;
+        padding-left: 25px;
+    }
+    .tasks-list ul .task .todoOptions .option img{
+        width: 100%;
+        height: 100%;
     }
     .task-details{
         width: 65%;
