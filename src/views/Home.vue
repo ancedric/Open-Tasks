@@ -4,23 +4,31 @@
     import ProfileCard from "../components/ProfileCard.vue"
     import AddTaskBar from "../components/AddTaskBar.vue"
     import Timer from "../components/Timer.vue"
+    import Notifications from "../components/Notifications.vue"
     import { useUserStore } from '../store/index'
     import { useProfileStore } from '../store/profile'
     import { useRouter } from 'vue-router'
     import {storeToRefs} from 'pinia'
+    import { scheduleNotifications, checkProfileCompletion } from '../services/NotificationsSystem.js';
 
     const router = useRouter()
     const userStore = useUserStore()
     const profileStore = useProfileStore()
 
     console.log('userStore:',userStore.user, 'user email:', userStore.user.email)
-    /*if(userStore.user.email === null || userStore.user.email === undefined){
+    if(userStore.user.email === null || userStore.user.email === undefined){
         router.push('/auth')
-    }*/
-    console.log('profile:', profileStore.profile, 'profile email:', profileStore.profile.email)
-    /*if(profileStore.profile.email === null || profileStore.profile.email === undefined){
+    }
+    
+    if(profileStore.profile.email === null || profileStore.profile.email === undefined){
         router.push('/setProfile')
-    }*/
+    }
+    
+    // Vérifier la complétude du profil
+    checkProfileCompletion(profileStore.profile.id, userStore.user.email);
+
+    scheduleNotifications(profileStore.profile)
+
 </script>
 
 <template>
@@ -29,6 +37,7 @@
         <div class="header">
             <h1>OpenTask</h1>
             <Timer />
+            <Notifications />
             <div class="about">About</div>
         </div>
         <div class="body">
@@ -58,6 +67,7 @@
         height: 100vh;
         padding: 0;
         margin: 0;
+        overflow: hidden;
         display: flex;
         flex-direction: row;
         justify-content: center;

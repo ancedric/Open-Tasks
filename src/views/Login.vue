@@ -17,6 +17,9 @@
         <p>You don't have an account ? <router-link to="/register">Sign Up</router-link></p>
       </div>
     </div>
+    <Alert type="danger" action="emptyField" v-if="notFilled"/>
+      <Alert type="danger" action="error" v-if="errors"/>
+      <Alert type="success" action="loggedIn" v-if="success"/>
   </template>
   
   <script setup>
@@ -25,6 +28,7 @@
   import { useRouter } from 'vue-router';
   import { useUserStore } from '../store/index'
   import { useProfileStore } from '../store/profile'
+  import Alert from '../components/Alert.vue';
   
       const email = ref('');
       const password = ref('');
@@ -32,23 +36,39 @@
 
       const user = useUserStore()
       const profile = useProfileStore()
+      const errors = ref( false )
+      const success= ref(false)
+      const notFilled = ref(false)
   
       const handleSubmit = async () => {
+        if(email.value === '' || password.value === ''){
+          notFilled.value = true  
+          errors.value = false
+          success.value = false
+
+          setTimeout(() => notFilled.value = false , 3000)
+        }else{
             const { data, error } = await supabase.auth.signInWithPassword({
               email: email.value,
               password: password.value
             })
             if(error){
               console.log('Error during authentication:', error)
+              errors.value = true
+
+              setTimeout(() => errors.value = false , 3000)
             }
 
             if(data){
-              user.authenticate(data.user)
-              console.log('data:', data.user)
-              console.log('user: ', user.user)  
+              notFilled.value = false
+              success.value = true
+              errors.value = false 
+              user.authenticate(data.user) 
               fetchProfile(email.value)  
             }
-            
+
+            setTimeout(() => success.value = false , 3000)
+        }
       }
       
       const fetchProfile = async (_email) => {
@@ -62,9 +82,7 @@
         }
 
         if(data){
-          console.log('profile data:', data[0])
           profile.setProfile(data[0]) 
-          console.log( 'user profile : ', profile)
           router.push('/home')
         }
           

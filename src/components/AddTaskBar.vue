@@ -2,13 +2,20 @@
 <script setup>
     import {ref} from 'vue'
     import {useRoute, useRouter} from 'vue-router'
+    import Alert from './Alert.vue';
 
     const newTask = ref('')
     const route = useRoute()
     const router= useRouter()
+    const errors = ref( false )
 
     const submitTask = () => {
-        router.replace({path: `/addTask/${newTask.value}`})
+        if(newTask === null || newTask === undefined){
+            error.value = true
+        } else{
+            errors.value = false
+            router.replace({path: `/addTask/${newTask.value}`})
+        }
     }
 
 
@@ -21,6 +28,7 @@
             <button :disabled="newTask.length === 0" class="send-btn"> <div class="btn-circle"> <div class="btn-circle-2"></div> </div> Add task</button>
         </form>
     </div>
+    <Alert type="danger" action="emptyField" v-if="errors"/>
 </template>
 <style scope>
     .form-ctn, form{

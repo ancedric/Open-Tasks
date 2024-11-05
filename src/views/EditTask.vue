@@ -26,6 +26,9 @@
             </form>
         </div>
     </section>
+    <Alert type="danger" action="emptyField" v-if="notFilled"/>
+    <Alert type="danger" action="error" v-if="errors"/>
+    <Alert type="success" action="added" v-if="success"/>
 </template>
 
 <script setup>
@@ -42,37 +45,52 @@
     //const taskdata = ref(route.params.title)
     //console.log("data got from url :", taskdata.value)
 
+    const taskId = ref(route.params.id)
     const taskTitle = ref(route.params.title)
     const taskDescription = ref(route.params.description)
     const stepsList = ref([])
     const newStepName = ref('')
     const newStepTime = ref('')
     const addStep = ref(false)
-
-    console.log("data title from url :", taskTitle.value)
-    console.log("data description from url :", taskDescription.value)
-
+    const errors = ref( false )
+    const success= ref(false)
+    const notFilled = ref(false)
 
     const submitTask = async () => {
-        const title = taskTitle.value
-        const description = taskDescription.value
-        const progression = 0
-        const completed = false
-        const ownerId = profileStore.profile.id
+        if(taskTitle.value === '' || taskDescription.value === ''){
+            notFilled.value = true
+            errors.value = false
+            success.value = false
 
-        console.log("form data:",title, description, ownerId)
+            setTimeout(() => notFilled.value = false , 3000)
+        }else{
+            const title = taskTitle.value
+            const description = taskDescription.value
+            const progression = 0
+            const completed = false
+            const ownerId = 1 
 
-       const { data, error } = await supabase
-        .from('Tasks')
-        .update([{title, description, ownerId }])
-        .eq('id', taskId)
+            console.log("form data:",title, description, progression, completed, ownerId)
 
-        if(error){
-            console.log("Erreur lors de la mise à jour de la tâche :",error)
-        }
-        if(data){
-            console.log("Updated data:", data)
-            router.push('/tasks')
+            const { data, error } = await supabase
+                .from('Tasks')
+                .insert([{title, description, progression, completed, ownerId }])
+                .select()
+
+                if(error){
+                    console.log(error)
+                    errors.value = true
+
+                    setTimeout(() => error.value = false , 3000)
+                }
+                if(data){
+                    notFilled.value = false
+                    errors.value = false
+                    success.value = true
+                    router.push('/tasks')
+
+                    setTimeout(() => success.value = false , 3000)
+                }
         }
     }
     /*
@@ -270,7 +288,7 @@
         right: 10%;
         top: 28px;
         &:hover{
-            width: 120px;
+            width: 150px;
         }
         @media screen and (max-width: 860px){
             right: 15%;

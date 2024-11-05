@@ -15,7 +15,7 @@ export const routes = [
     {path: '/', component: LandingPage},
     {path: '/home', component: Home},
     {path: '/addTask/:title', component: AddTask},
-    {path: '/editTask/:title/desc/:description', component: EditTask},
+    {path: '/editTask/:id/title/:title/desc/:description', component: EditTask},
     {path: '/tasks', component: Tasks},
     {path: '/profile', component: Profile},
     {path: '/auth', component: Login},

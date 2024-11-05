@@ -17,32 +17,54 @@
       <p>Already have an account ? <router-link to="/auth">Sign In</router-link></p>
     </div>
   </div>
+  <Alert type="danger" action="emptyField" v-if="notFilled"/>
+  <Alert type="danger" action="error" v-if="errors"/>
+  <Alert type="success" action="loggedIn" v-if="success"/>
 </template>
   
   <script setup>
   import { ref } from 'vue';
   import supabase from '../services/supabaseConfig';
   import { useRouter } from 'vue-router';
+  import Alert from '../components/Alert.vue';
   
   const userEmail = ref('');
   const userPassword = ref('');
   const router = useRouter();
-  
+  const errors = ref( false )
+  const success= ref(false)
+  const notFilled = ref(false)
+
   const handleSubmit = async () => {
-    console.log(userEmail.value, userPassword.value)
-    const { data, error } = await supabase.auth.signUp({
-      email: userEmail.value,
-      password: userPassword.value
-    })
+    if(email.value === '' || password.value === ''){
+          notFilled.value = true  
+          errors.value = false
+          success.value = false
 
-    if(error){
-      console.log(error)
-    }
+          setTimeout(() => notFilled.value = false , 3000)
+        }else{
+          const { data, error } = await supabase.auth.signUp({
+            email: userEmail.value,
+            password: userPassword.value
+          })
 
-    if(data){
-      router.push('/confirmation');
-    }
-  }
+          if(error){
+            console.log(error)
+            errors.value = true
+
+            setTimeout(() => errors.value = false , 3000)
+          }
+
+          if(data){
+            success.value = true
+            errors.value = false
+            notFilled.value = false
+            router.push('/confirmation');
+          }
+
+          setTimeout(() => success.value = false , 3000)
+        }
+}
   const signUpWithGitHub = () =>{}
   </script>
 

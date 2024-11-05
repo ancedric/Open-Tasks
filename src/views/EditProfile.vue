@@ -66,7 +66,9 @@
             </div>
         </div>
     </section>
-    
+    <Alert type="danger" action="emptyField" v-if="notFilled"/>
+    <Alert type="danger" action="error" v-if="errors"/>
+    <Alert type="success" action="loggedIn" v-if="success"/>
 </template>
 
 <script setup>
@@ -75,6 +77,7 @@
     import { useUserStore } from '../store/index'
     import { useProfileStore } from '../store/profile'
     import supabase from '../services/supabaseConfig'
+    import Alert from '../components/Alert.vue'
 
     const router = useRouter()
     const userStore = useUserStore()
@@ -88,6 +91,9 @@
     const country = ref(profileStore.profile.country)
     const city = ref(profileStore.profile.city)
     const plan = ref(profileStore.profile.plan)
+    const errors = ref( false )
+    const success= ref(false)
+    const notFilled = ref(false)
 
     if(userStore.user === null || userStore.user === undefined){
         router.push('/auth')
@@ -111,21 +117,49 @@
     }
 
     const handleSubmit = async () =>{
-        console.log("form data: ",imageUrl.value, firstName.value, lastName.value, email.value, company.value, country.value, city.value, plan.value)
+        if(imageUrl.value === '' || 
+            userfirstName.value === '' ||
+            userlastName.value === '' ||
+            useremail.value === '' ||
+            usercompany.value === '' ||
+            usercountry.value ==='' ||
+            usercity.value ==='' ||
+            userplan.value === ''
+        ){
+            notFilled.value = true  
+            errors.value = false
+            success.value = false
 
-        const { data, error } = await supabase
-            .from('Profile')
-            .update({
-            firstName: firstName.value,
-            lastName: lastName.value,
-            email: email.value,
-            company: company.value,
-            country: country.value,
-            city: city.value,
-            plan: plan.value,
-            imageUrl: imageUrl.value
-            })
-            .eq('id', profile.userId)
+            setTimeout(() => notFilled.value = false , 3000)
+        }else{
+            const { data, error } = await supabase
+                .from('Profile')
+                .update({
+                firstName: firstName.value,
+                lastName: lastName.value,
+                email: email.value,
+                company: company.value,
+                country: country.value,
+                city: city.value,
+                plan: plan.value,
+                imageUrl: imageUrl.value
+                })
+                .eq('id', profile.userId)
+
+                if(error){
+                    console.log("Error during modification of the profile :", error)
+                    errors.value = true
+
+                    setTimeout(() => errors.value = false , 3000)
+                }
+
+                if(data){
+                    success.value = true
+                    router.push('/home')
+
+                    setTimeout(() => success.value = false , 3000)
+                }
+        }
     }
 
 const backHome = () =>{

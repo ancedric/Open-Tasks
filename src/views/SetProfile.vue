@@ -66,7 +66,9 @@
             </div>
         </div>
     </section>
-    
+    <Alert type="danger" action="emptyField" v-if="notFilled"/>
+    <Alert type="danger" action="error" v-if="errors"/>
+    <Alert type="success" action="loggedIn" v-if="success"/>
 </template>
 
 <script setup>
@@ -92,6 +94,9 @@
     const usercountry = ref('')
     const usercity = ref('')
     const userplan = ref('')
+    const errors = ref( false )
+    const success= ref(false)
+    const notFilled = ref(false)
 
     const onFileSelected = async (event) => {
         const file = event.target.files[0]
@@ -112,32 +117,52 @@
 
 
     const handleSubmit = async () =>{
-        console.log("form data:", imageUrl.value, userfirstName.value, userlastName.value, useremail.value, usercompany.value, usercountry.value, usercity.value, userplan.value)
-        
-        const profileImage = imageUrl.value
-        const firstName = userfirstName.value
-        const lastName = userlastName.value
-        const email = useremail.value
-        const company = usercompany.value
-        const country = usercountry.value
-        const city = usercity.value
-        const plan = userplan.value
+        if(imageUrl.value === '' || 
+            userfirstName.value === '' ||
+            userlastName.value === '' ||
+            useremail.value === '' ||
+            usercompany.value === '' ||
+            usercountry.value ==='' ||
+            usercity.value ==='' ||
+            userplan.value === ''
+        ){
+            notFilled.value = true  
+            errors.value = false
+            success.value = false
 
-        const { data, error } = await supabase
-            .from('Profiles')
-            .insert([{firstName, lastName, email, company, country, city, plan, profileImage }])
-            .select()
+            setTimeout(() => notFilled.value = false , 3000)
+        }else{
+            notFilled.value = false
+            success.value = true
+            errors.value = false
 
-            if(error){
-                console.log('Error during setting profile: ', error)
-            }
+            const profileImage = imageUrl.value
+            const firstName = userfirstName.value
+            const lastName = userlastName.value
+            const email = useremail.value
+            const company = usercompany.value
+            const country = usercountry.value
+            const city = usercity.value
+            const plan = userplan.value
 
-            if(data){
-                console.log(data[0])
-                profile.setProfile(data[0])
+            const { data, error } = await supabase
+                .from('Profiles')
+                .insert([{firstName, lastName, email, company, country, city, plan, profileImage }])
+                .select()
 
-                console.log('profile:', profile)
-                router.push('/home')
+                if(error){
+                    console.log('Error during setting profile: ', error)
+                    errors.value = true
+
+                    setTimeout(() => error.value = false , 3000)
+                }
+
+                if(data){
+                    success.value = true
+                    router.push('/home')
+
+                    setTimeout(() => success.value = false , 3000)
+                }
             }
     }
 
