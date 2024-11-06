@@ -48,6 +48,10 @@
         color: #505181;
         box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
         position: relative;
+        animation-name: scaleUp;
+        animation-duration: .5s;
+        animation-timing-function: ease-in-out;
+        animation-delay: .6s;
         &:hover{
             cursor: pointer;
             box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.5);
@@ -59,6 +63,14 @@
             width: 40vw;
             height: 25vh;
             position: relative;
+        }
+    }
+    @keyframes scaleUp{
+        from{
+            transform: scale(0.5);
+        }
+        to{
+            transform: scale(1);
         }
     }
     
@@ -76,6 +88,7 @@
         font-size: 1rem;
         @media screen and (max-width: 860px){
             top: -15px;
+            color: #eee;
         }
     }
     .user-card-title h3::after{
@@ -165,17 +178,23 @@
         color: #505181;
         padding-left: 20px;
         @media screen and (max-width: 860px){
-            padding-left: 20px;
-            padding-bottom: 20px;
+            text-align: right;
+            font-size: 0.6rem;
+            width: 100%;
+            margin-left: 30%;
         }    
     }
     .user-bottom .user-title{
         padding: 20px;
         font-size: 1.2rem;
         color: #505181;
-        font-weight: 700;@media screen and (max-width: 860px){
-            font-size: 1rem;
+        font-weight: 700;
+        @media screen and (max-width: 860px){
+            font-size: 0.8rem;
             padding: 10px;
+            text-align: right;
+            width: 100%;
+            margin-left: 40%;
         }
     }
 </style>

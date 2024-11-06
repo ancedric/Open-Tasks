@@ -13,7 +13,10 @@
           <ul>
             <li v-for="notification in notifications" :key="notification.id" :class="{read:notification.read === true, unread: notification.read === false}">
               {{ notification.message }}<br/>
-              <button @click="markAsRead(notification.id)" class="markRead">Mark as read</button>
+              {{ formatDateTime(notification.created_at) }}<br/>
+              <button @click="markAsRead(notification.id)" class="markRead">
+                {{ notification.read ? 'Already read' : 'Mark as read' }}
+              </button>
             </li>
           </ul>
         </div>
@@ -30,7 +33,7 @@
   
   const profileStore = useProfileStore()
   const notifications = ref([]);
-  const displayNotif = ref(true)
+  const displayNotif = ref(false)
 
   const showNotifs = () => {
     displayNotif.value = true
@@ -38,6 +41,12 @@
   const closeNotifs = () => {
     displayNotif.value = false
   }
+
+  const unread = ref(0);
+
+  const countNotifs = () => {
+    unread.value = notifications.value.filter((notif) => !notif.read).length;
+  };
   
   const getNotifications = async () => {
     const { data, error } = await supabase
@@ -48,7 +57,22 @@
     if (error) {
       console.log(error);
     } else {
-      notifications.value = data;
+      notifications.value = [...data]
+      countNotifs();
+    }
+  };
+
+  const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime);
+    const today = new Date();
+    const yesterday = new Date(today.setDate(today.getDate() - 1));
+
+    if (date.toDateString() === today.toDateString()) {
+      return 'Today';
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return 'Yesterday';
+    } else {
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     }
   };
   
@@ -65,16 +89,7 @@
     }
   };
   
-  const countNotifs= () => {
-    const notRead = ref(0)
-      notifications.value.map((notif) => {
-      if(notif.read === false){
-        notRead.value ++
-      }
-      console.log(notRead.value)
-      return notRead.value
-  })}
-  const unread = countNotifs()
+  
   onMounted(() => {
     getNotifications();
   });
@@ -145,15 +160,30 @@
     .contain{
       padding: 10px;
       font-size: 0.9rem;
+      text-align: center;
     }
     .unread{
-      background-color: #eeeeee80;
-      border-bottom: 1 px solid;
+      background-color: #04064980;
+      color: #eee;
+      padding: 5px;
+      border-radius: 5px;
+      border-bottom: 1px solid;
+      margin-bottom: 10px;
+    }
+    .read{
+      background-color: #a6ada8;
+      color: #eee;
+      padding: 5px;
+      border-radius: 5px;
+      border-bottom: 1px solid;
+      margin-bottom: 10px;
     }
     .markRead{
       background-color: #b6f89cf6;
       color: #316e18f6;
-      border-radius: 5px;
+      border-radius: 3px;
       border: none;
+      width: 90%;
+      cursor: pointer;
     }
   </style>

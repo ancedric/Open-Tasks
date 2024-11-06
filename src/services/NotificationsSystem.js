@@ -2,38 +2,57 @@ import supabase from './supabaseConfig';
 import moment from 'moment';
 
 const createNotification = async (step, task) => {
-  const notification = {
-    userId: task.ownerId,
-    taskId: task.id,
-    stepId: step.id,
-    message: `L'étape ${step.title} de la tâche ${task.title} commence aujourd'hui.`,
-    read: false,
-  };
-
-  const { data, error } = await supabase
+  const existingNotification = await supabase
     .from('Notifications')
-    .insert([notification]);
+    .select('*')
+    .eq('taskId', task.id)
+    .eq('stepId', step.id)
+    .eq('userId', task.ownerId)
+    .single();
 
-  if (error) {
-    console.log(error);
+  if (!existingNotification.data) {
+    const notification = {
+      userId: task.ownerId,
+      taskId: task.id,
+      stepId: step.id,
+      message: `L'étape ${step.title} de la tâche ${task.title} commence aujourd'hui.`,
+      read: false,
+    };
+
+    const { data, error } = await supabase
+      .from('Notifications')
+      .insert([notification]);
+
+    if (error) {
+      console.log(error);
+    }
   }
 };
 
+
 const createUpdateNotification = async (update) => {
+  const existingNotification = await supabase
+    .from('Notifications')
+    .select('*')
+    .eq('message', `Nouvelle mise à jour : ${update.title}`)
+    .single();
+
+  if (!existingNotification.data) {
     const notification = {
       userId: null, // Tous les utilisateurs
       message: `Nouvelle mise à jour : ${update.title}`,
       read: false,
     };
-  
+
     const { data, error } = await supabase
       .from('Notifications')
       .insert([notification]);
-  
+
     if (error) {
       console.log(error);
     }
-  };
+  }
+};
   
   const fetchProfile = async (_email) => {
         const { data, error } = await supabase
@@ -50,26 +69,34 @@ const createUpdateNotification = async (update) => {
         }
           
       }
-  export const checkProfileCompletion = async (userId, userEmail) => {
-    const profile = fetchProfile(userEmail)
-  
-      if (!profile.firstName || !profile.lastName || !profile.email || !profile.profilePhoto || !profile.country || !profile.city) {
-        const notification = {
-          userId,
-          message: 'Veuillez compléter vos informations de profil',
-          read: false,
-        };
-  
-        const { data, error } = await supabase
-          .from('Notifications')
-          .insert([notification]);
-  
-        if (error) {
-          console.log(error);
-        }
+      export const checkProfileCompletion = async (userId, userEmail) => {
+        const profile = await fetchProfile(userEmail);
       
-    }
-  };
+        if (!profile.firstName || !profile.lastName || !profile.email || !profile.profilePhoto || !profile.country || !profile.city) {
+          const existingNotification = await supabase
+            .from('Notifications')
+            .select('*')
+            .eq('userId', userId)
+            .eq('message', 'Veuillez compléter vos informations de profil')
+            .single();
+      
+          if (!existingNotification.data) {
+            const notification = {
+              userId,
+              message: 'Veuillez compléter vos informations de profil',
+              read: false,
+            };
+      
+            const { data, error } = await supabase
+              .from('Notifications')
+              .insert([notification]);
+      
+            if (error) {
+              console.log(error);
+            }
+          }
+        }
+      };
   const getTaskSteps = async (taskId) => {
     const { data, error } = await supabase 
     .from('TaskSteps')
@@ -133,5 +160,4 @@ const createUpdateNotification = async (update) => {
         });
       }
 
-      
 };

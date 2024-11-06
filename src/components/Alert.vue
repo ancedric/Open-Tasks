@@ -53,8 +53,9 @@
         position: absolute;
         left: 100px;
         bottom: 100px;
-        width: 350px;
-        height: 60px;
+        width: 200px;
+        height: 40px;
+        font-size :1rem;
         padding-left: 10px;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);

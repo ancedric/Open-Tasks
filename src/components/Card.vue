@@ -25,7 +25,7 @@
     </div>
     <div class="bottom-ctn">
         <div class="bottom">
-            <div class="task-title">REDACTION DE L'ARTICLE</div>
+            <div class="task-title">All user tasks</div>
         </div>
     </div>
     
@@ -41,6 +41,10 @@
         overflow: hidden;
         box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
         position: relative;
+        animation-name: scaleUp;
+        animation-duration: .5s;
+        animation-timing-function: ease-in-out;
+        animation-delay: .3s;
         &:hover{
             cursor: pointer;
             box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.5);
@@ -56,6 +60,16 @@
             height: 25vh;
         }
     }
+            
+    @keyframes scaleUp{
+        from{
+            transform: scale(0.5);
+        }
+        to{
+            transform: scale(1);
+        }
+    }
+        
     
     .main-ctn::after{
         content:"";

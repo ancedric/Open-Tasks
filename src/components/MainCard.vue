@@ -29,7 +29,7 @@
         if(tasksList.value.length === 0 || tasksList.value === undefined ){
             return []
         }
-        return tasksList.value.sort((a, b) => a.created_at > b.created_at ? 1 : -1)
+        return tasksList.value.sort((a, b) => a.created_at > b.created_at ? -1 : 1)
     })
 
     const navigateTo = () =>{
@@ -79,9 +79,20 @@
         overflow: hidden;
         box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
         position: relative;
+        animation-name: scaleUp;
+        animation-duration: .5s;
+        animation-timing-function: ease-in-out;
         @media screen and (max-width: 860px){
             width: 95vw;
             height: 25vh;
+        }
+    }
+    @keyframes scaleUp{
+        from{
+            transform: scale(0.5);
+        }
+        to{
+            transform: scale(1);
         }
     }
     .main-ctn:hover{
