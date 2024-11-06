@@ -10,6 +10,10 @@ import ConfirmEmail from './views/ConfirmEmail.vue'
 import EditProfile from './views/EditProfile.vue'
 import SetProfile from './views/SetProfile.vue'
 import Pricing from './views/Pricing.vue'
+import UsersConditions from './views/UsersConditions.vue'
+import PrivacyPolicy from './views/PrivacyPolicy.vue'
+import LegalNotice from './views/LegalNotice.vue'
+import Support from './views/Support.vue'
 
 export const routes = [
     {path: '/', component: LandingPage},
@@ -23,5 +27,9 @@ export const routes = [
     {path: '/confirmation', component: ConfirmEmail},
     {path: '/editProfile', component: EditProfile},
     {path: '/setProfile', component: SetProfile},
-    {path: '/pricing', component: Pricing}
+    {path: '/pricing', component: Pricing},
+    {path: '/usersConditions', component: UsersConditions},
+    {path: '/privacyPolicy', component: PrivacyPolicy},
+    {path: '/legalNotice', component: LegalNotice},
+    {path: '/support', component: Support},
 ]

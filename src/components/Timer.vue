@@ -1,9 +1,24 @@
-<script setup></script>
+<script setup>
+    import { ref, onMounted } from 'vue';
+
+    const formattedDate = ref('');
+    const formattedYear = ref('');
+
+    onMounted(() => {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1; // Les mois sont indexés à partir de 0
+    const year = currentDate.getFullYear();
+
+    formattedDate.value = `${day} | ${month}`;
+    formattedYear.value = year.toString();
+    });
+</script>
 
 <template>
-    <div class=" date-ctn">
-        <p class="date">15 | 10</p>
-        <p class="year">2024</p>
+    <div class="date-ctn">
+      <p class="date">{{ formattedDate }}</p>
+      <p class="year">{{ formattedYear }}</p>
     </div>
 </template>
 

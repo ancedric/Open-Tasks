@@ -11,16 +11,19 @@
                         <div class="profile-photo">
                             <img :src="profileStore.profile.profilePhoto" :alt="profileStore.profile.firstName">
                         </div>
-                        <h2 class="profile-name">{{profileStore.profile.firstName}} {{profileStore.profile.lastName}}</h2>
-                        <p class="email">{{profileStore.profile.email}}</p>
-                        <p class="plan"> {{profileStore.profile.plan}}</p>
+                        <h3 class="profile-name">{{profileStore.profile.firstName}} {{profileStore.profile.lastName}}</h3>
+                        <div class="info">
+                            <p class="email">{{profileStore.profile.email}}</p>
+                            <p class="plan"> {{profileStore.profile.plan}}</p>
+                        </div>
                         <router-link to="/editProfile" class="plan">Edit profile</router-link>
+                        
                     </div>
                     <div class="useful-links">
-                        <router-link to="/" class="link">Users conditions</router-link>
-                        <router-link to="/" class="link">Privacy Policy</router-link>
-                        <router-link to="/" class="link">Legal Notice</router-link>
-                        <router-link to="/" class="link">Support</router-link>
+                        <router-link to="/usersConditions" class="link">Users conditions</router-link>
+                        <router-link to="/privacyPolicy" class="link">Privacy Policy</router-link>
+                        <router-link to="/legalNotice" class="link">Legal Notice</router-link>
+                        <router-link to="/support" class="link">Support</router-link>
                         <p class="link" @click="logOut">Log Out</p>
                     </div>
                 </div>
@@ -34,7 +37,7 @@
                     <p class="detail"> Company Name : {{profileStore.profile.company}}</p>
                     <p class="detail"> City : {{profileStore.profile.city}}</p>
                     <p class="detail"> Country : {{profileStore.profile.country}}</p>
-                    <p class="detail"> Registered at : {{profileStore.profile.createdAt}}</p>
+                    <p class="detail"> Registered at : {{profileStore.profile.created_at}}</p>
                 </div>
             </div>
         </div>
@@ -87,8 +90,8 @@ const backHome = () =>{
         display: flex;
         justify-content: space-between;
         align-items: start;
-        width: 70vw;
-        height: 80vh;
+        width: 90vw;
+        height: 90vh;
         background-color: #eee;
         border-radius: 50px;
         box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
@@ -105,6 +108,7 @@ const backHome = () =>{
     }
     .user{
        width: 35%;
+       height: 100%;
        display: flex;
        flex-direction: column;
        justify-content: flex-start;
@@ -115,6 +119,7 @@ const backHome = () =>{
         }
     }
     .user .sum-ctn{
+        height: 95%;
         @media screen and (max-width : 860px){
             width: 100%;
             display: flex;
@@ -123,28 +128,41 @@ const backHome = () =>{
         }
     }
     .profile-sumary{
-        padding-left: 20px;
+        text-align: center;
         color: #505181;
-        height: 50%;
+        width: 100%;
+        height: 70%;
+        padding: 0 10px;
         @media screen and (max-width: 860px){
-            
             height: 100%;
             gap:20px;
         }
     }
+    .info{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        height: 10%;
+    }
     .profile-sumary .user-name{
+        height: 7px;
         @media screen and (max-width : 860px){
             font-size: 1rem;
         }
     }
     .profile-sumary .email{
+        height: 5px;
+        margin: 0 0;
+        padding-top: 0;
         font-style: italic;
+        font-size: 0.8rem;
+    }
+    .plan{
         font-size: 0.8rem;
     }
     .profile-sumary .profile-photo{
         width: 180px;
         height: 180px;
-        margin-left: 20%;
         border: 6px solid #fff;
         border-radius: 50%;
         overflow: hidden;
@@ -158,9 +176,10 @@ const backHome = () =>{
         height: 100%;
         object-fit: cover;
     }
-    .profile-ctn .useful-links{
+    .profile-ctn .user .sum-ctn .useful-links{
         display: flex;
         flex-direction: column;
+        text-align: left;
         gap: 5px;
         @media screen and (max-width:860px){
             width: 50%;
@@ -170,7 +189,7 @@ const backHome = () =>{
             text-align: right;
         }
     }
-    .profile-ctn .useful-links .link{
+    .profile-ctn .user .sum-ctn .useful-links .link{
         @media screen and (max-width:860px){
             text-align: right;
             font-family: Inter;
