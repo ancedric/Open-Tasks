@@ -10,7 +10,7 @@
         <section class="hero">
           <h1>OpenTask</h1>
           <p>Gérez vos tâches avec efficacité</p>
-          <button><router-link to='/register'>Inscrivez-vous maintenant</router-link></button>
+          <button class="action"><router-link to='/register' class="subsc">Inscrivez-vous maintenant</router-link></button>
         </section>
         <section class="features">
           <h2>Caractéristiques</h2>
@@ -78,7 +78,7 @@
     }
 
     .hero {
-        background-image: linear-gradient(to bottom, #333, #555);
+        background-image: linear-gradient(to bottom, #004581, #042e52);
         color: #fff;
         padding: 50px;
         text-align: center;
@@ -87,7 +87,23 @@
     .hero h1 {
         font-size: 36px;
         }
-
+        .action{
+          height:50px;
+          border: 3px solid #eee;
+          background: transparent;
+          transition: all .3s ease;
+          &:hover{
+            background-color: #eee;
+            color:#555;
+          }
+        }
+        .action .subsc{
+          text-decoration: none;
+          color: #eee;
+          &:hover{
+            color: #555;
+          }
+        }
     .features {
         display: flex;
         flex-wrap: wrap;
@@ -143,4 +159,154 @@
     .call-to-action button:hover {
         background-color: #666;
     }
-  </style>
+    /* Styles responsives */
+
+@media screen and (max-width: 1024px) {
+  .landing-page {
+    padding: 15px;
+  }
+  header {
+    padding: 5px;
+  }
+  .hero {
+    padding: 30px;
+  }
+  .hero h1 {
+    font-size: 28px;
+  }
+  .features {
+    flex-direction: column;
+  }
+  .features li {
+    margin: 5px;
+    padding: 5px;
+  }
+  .benefits {
+    flex-direction: column;
+  }
+  .benefits li {
+    margin: 5px;
+    padding: 5px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .landing-page {
+    padding: 10px;
+  }
+  header {
+    padding: 3px;
+  }
+  .hero {
+    padding: 20px;
+  }
+  .hero h1 {
+    font-size: 22px;
+  }
+  .features li {
+    margin: 3px;
+    padding: 3px;
+  }
+  .benefits li {
+    margin: 3px;
+    padding: 3px;
+  }
+  .call-to-action {
+    padding: 15px;
+  }
+  .call-to-action button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .landing-page {
+    padding: 5px;
+  }
+  header {
+    padding: 2px;
+  }
+  .hero {
+    padding: 15px;
+  }
+  .hero h1 {
+    font-size: 18px;
+  }
+  .features li {
+    margin: 2px;
+    padding: 2px;
+  }
+  .benefits li {
+    margin: 2px;
+    padding: 2px;
+  }
+  .call-to-action {
+    padding: 10px;
+  }
+  .call-to-action button {
+    padding: 3px 5px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .landing-page {
+    padding: 0;
+  }
+  header {
+    padding: 1px;
+  }
+  .hero {
+    padding: 10px;
+  }
+  .hero h1 {
+    font-size: 16px;
+  }
+  .features li {
+    margin: 1px;
+    padding: 1px;
+  }
+  .benefits li {
+    margin: 1px;
+    padding: 1px;
+  }
+  .call-to-action {
+    padding: 5px;
+  }
+  .call-to-action button {
+    padding: 2px 3px;
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .landing-page {
+    padding: 0;
+  }
+  header {
+    padding: 0;
+  }
+  .hero {
+    padding: 5px;
+  }
+  .hero h1 {
+    font-size: 14px;
+  }
+  .features li {
+    margin: 0;
+    padding: 0;
+  }
+  .benefits li {
+    margin: 0;
+    padding: 0;
+  }
+  .call-to-action {
+    padding: 0;
+  }
+  .call-to-action button {
+    padding: 1px 2px;
+    font-size: 9px;
+  }
+}
+</style>
