@@ -9,7 +9,7 @@
                 <div v-else class="sum-ctn">
                     <div class="profile-sumary">
                         <div class="profile-photo">
-                            <img :src="profileStore.profile.profilePhoto" :alt="profileStore.profile.firstName">
+                            <img :src="profileStore.profile.profileImage" :alt="profileStore.profile.firstName">
                         </div>
                         <h3 class="profile-name">{{profileStore.profile.firstName}} {{profileStore.profile.lastName}}</h3>
                         <div class="info">
