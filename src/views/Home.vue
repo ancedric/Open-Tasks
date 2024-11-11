@@ -120,6 +120,7 @@
         width: 100%;
         height: 80%;
         display: flex;
+        gap: 60px;
         @media screen and (max-width: 860px){
             display: flex;
             flex-direction: column;
