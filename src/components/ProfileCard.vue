@@ -21,7 +21,7 @@
     <div class="user-mid">
         <div v-if="userStore.user === undefined"> No user connected...</div>
         <div v-else class="profile-img">
-            <img :src="profileStore.profile.profilePhoto" class="usr-img"/>
+            <img :src="profileStore.profile.profileImage" class="usr-img"/>
         </div>
     </div>
     <div class="user-bottom-ctn">
