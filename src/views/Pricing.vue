@@ -71,12 +71,12 @@
             <td>Support</td>
             <td>E-mail</td>
             <td>Téléphone et e-mail</td>
-            <td>Téléphone, e-mail et ticket</td>
+            <td>Téléphone et e-mail </td>
           </tr>
         </table>
       </div>
       <div class="faq">
-        <h2>Foire aux questions</h2>
+        <h2>FAQ</h2>
         <ul>
           <li>
             <p>Qu'est-ce que la période d'essai ?</p>

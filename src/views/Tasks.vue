@@ -422,13 +422,13 @@ const backHome = () =>{
         justify-content: center;
         align-items: center;
         color: #6b3e26;
+        padding: 10px;
         font-family: Inter;
         @media screen and (max-width: 860px){
             justify-content: flex-start;
             width: 100%;
             font-size: 0.8rem;
             padding: 10px;
-            padding-left: 70px;
         }
     }
     .task-details .details-ctn .steps{

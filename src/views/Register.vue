@@ -8,13 +8,16 @@
         </div>
         <div class="input-ctn">
           <div class="label">Password</div>
-          <input type="password" class="set-input" v-model="userPassword" placeholder="password">
+          <input :type="showPassword ? 'text' : 'password'"  class="set-input" v-model="userPassword" placeholder="password">
         </div>
-        <button type="submit" class="auth-btn">Sign Up</button>
+        <div @click="showPassword = !showPassword" class="hideOrShow">
+            {{ showPassword ? 'Hide password' : 'Show password' }}
+        </div>
+        <button type="submit" class="auth-btn">{{ submitting ? 'Please wait...' : 'Sign In' }}</button>
         <p>OR</p>
         <button @click="signUpWIthGitHub" class="auth-btn">Sign Up with GitHub</button>
       </form>
-      <p>Already have an account ? <router-link to="/auth">Sign In</router-link></p>
+      <p class="switch">Already have an account ? <router-link to="/auth">Sign In</router-link></p>
     </div>
   </div>
   <Alert type="danger" action="emptyField" v-if="notFilled"/>
@@ -34,8 +37,11 @@
   const errors = ref( false )
   const success= ref(false)
   const notFilled = ref(false)
+  const showPassword = ref(false)
+  const submitting = ref(false)
 
   const handleSubmit = async () => {
+    submitting.value = true
     if(email.value === '' || password.value === ''){
           notFilled.value = true  
           errors.value = false
@@ -146,5 +152,16 @@
         font-weight: 600;
         cursor: pointer;
         margin-top: 10px;
+    }
+    .hideOrShow{
+      width: 200px;
+      padding-top: 0;
+      font-family: Poppins;
+      font-size: 0.6rem;
+      text-align: right;
+      color: #9da6e0;
+    }
+    .switch{
+      font-size: 0.8rem;
     }
   </style>

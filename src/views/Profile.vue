@@ -67,7 +67,7 @@
             console.error('Erreur lors de la déconnexion :', error)
         }
         if(data){
-            userStore.user.$reset()
+            userStore.logout()
         }
     }
 

@@ -2,149 +2,191 @@
     <div class="landing-page">
       <header>
         <nav>
-          <router-link to='/auth'>Log in</router-link>
-          <router-link to='/register'>Sign up</router-link>
+          <router-link to='/auth' class="navLink1">Log in</router-link>
+          <router-link to='/register' class="navLink2">Sign up</router-link>
         </nav>
       </header>
       <main>
         <section class="hero">
           <h1>OpenTask</h1>
-          <p>Gérez vos tâches avec efficacité</p>
-          <button class="action"><router-link to='/register' class="subsc">Inscrivez-vous maintenant</router-link></button>
+          <p>Manage yours projects efficiently</p>
+          <p class="italic">Organise the work in your organization simply</p>
+          <button class="action"><router-link to='/register' class="subsc">Get In today</router-link></button>
         </section>
-        <section class="features">
-          <h2>Caractéristiques</h2>
-          <ul>
-            <li>
-              <i class="fas fa-check"></i>
-              Créez des tâches personnalisées
-            </li>
-            <li>
-              <i class="fas fa-clock"></i>
-              Définissez des deadlines précises
-            </li>
-            <li>
-              <i class="fas fa-list"></i>
-              Organisez vos étapes de déroulement
-            </li>
-            <li>
-              <i class="fas fa-users"></i>
-              Idéal pour les professionnels et les entreprises
-            </li>
-          </ul>
-        </section>
-        <section class="benefits">
-          <h2>Avantages</h2>
-          <ul>
-            <li>
-              <i class="fas fa-rocket"></i>
-              Augmentez votre productivité
-            </li>
-            <li>
-              <i class="fas fa-cog"></i>
-              Simplifiez votre gestion de tâches
-            </li>
-            <li>
-              <i class="fas fa-chart-line"></i>
-              Suivez vos progrès en temps réel
-            </li>
-          </ul>
-        </section>
+        <div class="landing-body">
+          <section class="features">
+            <h2>Features</h2>
+            <ul>
+              <li>
+                <i class="fas fa-check"></i>
+                Create custom tasks
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                Define your deadlines
+              </li>
+              <li>
+                <i class="fas fa-list"></i>
+                Manage tasks evolution
+              </li>
+              <li>
+                <i class="fas fa-users"></i>
+                Idéal for professionals businesses 
+              </li>
+            </ul>
+          </section>
+          <section class="benefits">
+            <h2>Benefits</h2>
+            <ul>
+              <li>
+                <i class="fas fa-rocket"></i>
+                Encrease your productivity
+              </li>
+              <li>
+                <i class="fas fa-cog"></i>
+                Simplify your tasks management
+              </li>
+              <li>
+                <i class="fas fa-chart-line"></i>
+                Follow your progress in real time
+              </li>
+            </ul>
+          </section>
+        </div>
+        
         <section class="call-to-action">
-          <h2>Rejoignez la communauté OpenTask</h2>
-          <button><router-link to='/register'>Inscrivez-vous maintenant</router-link></button>
+          <h2>Join OpenTask community</h2>
+          <button class="action"><router-link to='/register' class="link">Inscrivez-vous maintenant</router-link></button>
         </section>
+        <footer>
+          <p>copyright© OpenTask, 2024, All rights reserved</p>
+        </footer>
       </main>
     </div>
   </template>
 
   <style scoped>
-    .landing-page {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        padding: 20px;
+    .landing-page, main {
+      display: flex; 
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      overflow-x: hidden;
     }
 
     header {
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-        text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
     }
 
     header nav {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
     }
 
+    header nav .navLink1,
+    header nav .navLink2{
+      text-decoration: none;
+      color: #eee;
+      border: 2px solid;
+      width: 70px;
+      margin: 10px;
+      padding: 5px;
+    }
+    header nav .navLink1{
+      color: #333;
+      background-color: #eee;
+    }
     .hero {
-        background-image: linear-gradient(to bottom, #004581, #042e52);
-        color: #fff;
-        padding: 50px;
-        text-align: center;
-        }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+      margin: 0;
+      background-image: linear-gradient(to bottom, #004581, #042e52);
+      color: #fff;;
+      text-align: center;
+    }
 
     .hero h1 {
-        font-size: 36px;
+        font-size: 1.2rem;
         }
-        .action{
+    .action{
+          width: 300px;
           height:50px;
           border: 3px solid #eee;
           background: transparent;
           transition: all .3s ease;
+          color: #eee;
+          cursor: pointer;
           &:hover{
             background-color: #eee;
-            color:#555;
+            .subsc{
+              color:#555;
+            }
           }
+          
+    }
+        .hero .italic{
+          font-style: italic;
+          font-size: 0.7rem;
         }
+        
         .action .subsc{
           text-decoration: none;
           color: #eee;
-          &:hover{
-            color: #555;
-          }
         }
-    .features {
+
+    .landing-body{
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      margin: 10px;
+    }
+    .features,
+    .benefits{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        }
-
-    .features li {
-        margin: 10px;
-        padding: 10px;
+        width: 40%;
         border: 1px solid #ddd;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+        margin: 10px;
+      }
 
-    .features i {
-        margin-right: 10px;
-        }
-
-    .benefits {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        }
-
-    .benefits li {
+    li {
         margin: 10px;
         padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
         }
 
-    .benefits i {
+    i {
         margin-right: 10px;
-        }
+      }
 
     .call-to-action {
         background-color: #333;
         color: #fff;
         padding: 20px;
         text-align: center;
+        width: 100%;
         }
 
     .call-to-action button {
@@ -159,41 +201,39 @@
     .call-to-action button:hover {
         background-color: #666;
     }
+    footer{
+      width: 100%;
+      background-color: #666;
+      color: #eee;
+      font-size: 0.7rem;
+      text-align: center;
+    }
+    
+    .link{
+      text-decoration: none;
+      color: #eee;
+      margin: 10px;
+      padding: 5px;
+    }
     /* Styles responsives */
 
 @media screen and (max-width: 1024px) {
-  .landing-page {
-    padding: 15px;
-  }
   header {
     padding: 5px;
   }
   .hero {
     padding: 30px;
   }
-  .hero h1 {
-    font-size: 28px;
-  }
-  .features {
+  .features, .benefits {
     flex-direction: column;
   }
-  .features li {
-    margin: 5px;
-    padding: 5px;
-  }
-  .benefits {
-    flex-direction: column;
-  }
-  .benefits li {
+  li {
     margin: 5px;
     padding: 5px;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .landing-page {
-    padding: 10px;
-  }
+@media screen and (max-width: 860px) {
   header {
     padding: 3px;
   }
@@ -203,11 +243,16 @@
   .hero h1 {
     font-size: 22px;
   }
-  .features li {
-    margin: 3px;
-    padding: 3px;
-  }
-  .benefits li {
+  .landing-body{
+      flex-direction: column;
+      align-items: center;
+    }
+    .features,
+    .benefits{
+      width: 80%;
+      padding: 5px;
+    }
+  li {
     margin: 3px;
     padding: 3px;
   }
@@ -218,12 +263,12 @@
     padding: 5px 10px;
     font-size: 14px;
   }
+  footer{
+      font-size: 0.6rem;
+  }
 }
 
 @media screen and (max-width: 480px) {
-  .landing-page {
-    padding: 5px;
-  }
   header {
     padding: 2px;
   }
@@ -233,11 +278,7 @@
   .hero h1 {
     font-size: 18px;
   }
-  .features li {
-    margin: 2px;
-    padding: 2px;
-  }
-  .benefits li {
+  li {
     margin: 2px;
     padding: 2px;
   }
@@ -248,12 +289,12 @@
     padding: 3px 5px;
     font-size: 12px;
   }
+  footer{
+      font-size: 0.5rem;
+  }
 }
 
 @media screen and (max-width: 360px) {
-  .landing-page {
-    padding: 0;
-  }
   header {
     padding: 1px;
   }
@@ -263,11 +304,7 @@
   .hero h1 {
     font-size: 16px;
   }
-  .features li {
-    margin: 1px;
-    padding: 1px;
-  }
-  .benefits li {
+  li {
     margin: 1px;
     padding: 1px;
   }
@@ -281,9 +318,6 @@
 }
 
 @media screen and (max-width: 280px) {
-  .landing-page {
-    padding: 0;
-  }
   header {
     padding: 0;
   }
@@ -293,11 +327,7 @@
   .hero h1 {
     font-size: 14px;
   }
-  .features li {
-    margin: 0;
-    padding: 0;
-  }
-  .benefits li {
+  li {
     margin: 0;
     padding: 0;
   }
