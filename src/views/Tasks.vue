@@ -80,7 +80,7 @@
 
 <script setup>
     import supabase from '../services/supabaseConfig.js';
-    import {ref, computed} from 'vue'
+    import { ref, computed, onMounted } from 'vue'
     import ProgressBar from '../components/ProgressBar.vue'
     import {useRouter} from "vue-router" 
     import { useProfileStore } from '../store/profile'
@@ -117,27 +117,36 @@
     };
 
     const getTasks = async () => {
-        const { data, error } = await supabase
-            .from('Tasks')
-            .select('*')
-            .eq('ownerId', profileStore.profile.id)
+  const storedTasks = localStorage.getItem('tasks');
+  if (storedTasks) {
+    tasks.value = JSON.parse(storedTasks);
+  } else {
+    const { data, error } = await supabase
+      .from('Tasks')
+      .select('*')
+      .eq('ownerId', profileStore.profile.id);
 
-        if (error) {
-            console.log(error);
-            return []
-        }
-        if (data) {
-            const tasksWithSteps = await Promise.all(data.map(async (task) => {
-            const steps = await getTaskSteps(task.id)
-            return { ...task, steps }
-            }))
-            tasks.value = tasksWithSteps
-            console.log('tasks :', tasks.value)
-            return tasksWithSteps
-        }
-    };
+    if (error) {
+      console.log(error);
+      return [];
+    }
+    if (data) {
+      const tasksWithSteps = await Promise.all(data.map(async (task) => {
+        const steps = await getTaskSteps(task.id);
+        return { ...task, steps };
+      }));
+      tasks.value = tasksWithSteps;
+      localStorage.setItem('tasks', JSON.stringify(tasks.value));
+      console.log('tasks :', tasks.value);
+      return tasksWithSteps;
+    }
+  }
+  displayedTasks.value = sortedTasks()
+};
     
-    getTasks()
+onMounted(async () => {
+  await getTasks();
+});
     
 
     const sortedTasks = () => {
@@ -169,7 +178,8 @@
         return tasks.value.sort((a, b) => a.id > b.id ? -1 : 1).filter(t => hideCompleted.value === false || t.completed === false)
     }
 
-    const displayedTasks =ref(sortedTasks)
+    
+    const displayedTasks = ref(sortedTasks())
 
     const setAllTasks = computed( () =>{
         console.log('setAllTasks is called')
@@ -431,6 +441,11 @@ const backHome = () =>{
             padding: 10px;
         }
     }
+    .task-details .details-ctn{
+        @media screen and (max-width: 860px){
+            width: 80%;
+        }
+    }
     .task-details .details-ctn .steps{
         padding: 0;
     }
@@ -448,7 +463,7 @@ const backHome = () =>{
             font-size: 1rem;
         }
     }
-    .task-details .desc{
+    .task-details .details-ctn .desc{
         width: 300px;
         height: 70px;
         border: 1px solid #6b3e26;
@@ -456,7 +471,7 @@ const backHome = () =>{
         font-size: 0.8rem;
         padding: 20px;
         @media screen and (max-width: 860px){
-            width: 80%;
+            width: 90%;
             height: 70px;
             font-size: 0.8rem;
         }

@@ -134,6 +134,7 @@
       box-shadow: 0 0 30px #eeeeee80;
       width: 300px;
       height: 70vh;
+      padding-top: 60px;
       overflow-y: scroll; 
       overflow-x: hidden;
       z-index: 50;
@@ -146,8 +147,26 @@
         width: 80vw
       }
     }
+    
+    .notif-ctn h5{
+      position: fixed;
+      top: 30px;
+      width: 300px;
+      height: 60px;
+      padding-left: 10px;
+      padding-top: 10px;
+      background-color: #eee;
+      border-radius: 10px;
+      z-index: 5;
+      @media screen and (max-width: 860px){
+        width: 78%;
+      }
+    }
     .close{
-      width: 95%;
+      position: fixed;
+      top: 60px;
+      right: 30px;
+      width: 10%;
       height: 30px;
       margin: 10px;
       background-color: #050df8;
@@ -155,6 +174,12 @@
       font-size: 1rem;
       text-align: center;
       border-radius: 5px;
+      cursor: pointer;
+      z-index: 5;
+      @media screen and (max-width: 860px){
+        right: 65px;
+        width: 20%;
+      }
     }
     .empty,
     .contain{
