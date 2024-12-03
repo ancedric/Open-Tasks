@@ -34,13 +34,13 @@ const createUpdateNotification = async (update) => {
   const existingNotification = await supabase
     .from('Notifications')
     .select('*')
-    .eq('message', `Nouvelle mise à jour : ${update.title}`)
+    .eq('message', update.title)
     .single();
 
   if (!existingNotification.data) {
     const notification = {
       userId: null, // Tous les utilisateurs
-      message: `Nouvelle mise à jour : ${update.title}`,
+      message: update.title,
       read: false,
     };
 
